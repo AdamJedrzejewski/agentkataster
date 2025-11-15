@@ -145,8 +145,8 @@ def status():
 
 @app.command()
 def start(
-    parcels: bool = typer.Option(True, help="Scrape parcel data"),
-    plans: bool = typer.Option(True, help="Scrape spatial plans"),
+    parcels: bool = typer.Option(True, "--parcels/--no-parcels", help="Scrape parcel data"),
+    plans: bool = typer.Option(True, "--plans/--no-plans", help="Scrape spatial plans"),
 ):
     """Start background scraping for all municipalities."""
     setup_logging()
@@ -164,8 +164,8 @@ def start(
 @app.command()
 def scrape_municipality(
     teryt_code: str = typer.Argument(..., help="TERYT code of municipality"),
-    parcels: bool = typer.Option(True, help="Scrape parcel data"),
-    plans: bool = typer.Option(True, help="Scrape spatial plans"),
+    parcels: bool = typer.Option(True, "--parcels/--no-parcels", help="Scrape parcel data"),
+    plans: bool = typer.Option(True, "--plans/--no-plans", help="Scrape spatial plans"),
 ):
     """Scrape a specific municipality by TERYT code."""
     setup_logging()
@@ -197,7 +197,7 @@ def scrape_municipality(
 @app.command()
 def list_municipalities(
     limit: int = typer.Option(50, help="Number of municipalities to show"),
-    pending_only: bool = typer.Option(False, help="Show only pending municipalities"),
+    pending_only: bool = typer.Option(False, "--pending-only", help="Show only pending municipalities"),
 ):
     """List municipalities in the database."""
     setup_logging()
