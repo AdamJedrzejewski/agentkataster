@@ -144,38 +144,38 @@ def status():
 
 
 @app.command()
-def start(
-    no_parcels: bool = typer.Option(False, is_flag=True, help="Skip parcel data scraping"),
-    no_plans: bool = typer.Option(False, is_flag=True, help="Skip spatial plans scraping"),
-):
-    """Start background scraping for all municipalities."""
+def start():
+    """Start background scraping for all municipalities (parcels only by default)."""
     setup_logging()
 
-    parcels = not no_parcels
-    plans = not no_plans
-
     console.print("[bold green]Starting background scraping...[/bold green]")
-    console.print(f"Scraping parcels: {parcels}")
-    console.print(f"Scraping plans: {plans}")
+    console.print("Scraping: Parcels only (use start-all for parcels+plans)")
 
-    process_all_municipalities(scrape_parcels=parcels, scrape_plans=plans)
+    process_all_municipalities(scrape_parcels=True, scrape_plans=False)
 
     console.print("[bold green]✓ Scraping jobs queued![/bold green]")
-    console.print("Use 'agentkataster status' to monitor progress")
+    console.print("Use 'status' to monitor progress")
 
 
 @app.command()
-def scrape_municipality(
-    teryt_code: str = typer.Argument(..., help="TERYT code of municipality"),
-    no_parcels: bool = typer.Option(False, is_flag=True, help="Skip parcel data scraping"),
-    no_plans: bool = typer.Option(False, is_flag=True, help="Skip spatial plans scraping"),
-):
-    """Scrape a specific municipality by TERYT code."""
+def start_all():
+    """Start background scraping for all municipalities (parcels AND plans)."""
+    setup_logging()
+
+    console.print("[bold green]Starting background scraping...[/bold green]")
+    console.print("Scraping: Parcels AND Spatial Plans")
+
+    process_all_municipalities(scrape_parcels=True, scrape_plans=True)
+
+    console.print("[bold green]✓ Scraping jobs queued![/bold green]")
+    console.print("Use 'status' to monitor progress")
+
+
+@app.command()
+def scrape(teryt_code: str):
+    """Scrape a specific municipality by TERYT code (parcels only)."""
     setup_logging()
     db = SessionLocal()
-
-    parcels = not no_parcels
-    plans = not no_plans
 
     try:
         municipality = db.query(Municipality).filter_by(code=teryt_code).first()
@@ -185,40 +185,22 @@ def scrape_municipality(
             return
 
         console.print(f"[bold green]Scraping {municipality.name} ({teryt_code})[/bold green]")
-
-        if parcels:
-            console.print("Queuing parcel scraping...")
-            scrape_municipality_parcels.delay(municipality.id)
-
-        if plans:
-            console.print("Queuing spatial plans scraping...")
-            scrape_municipality_plans.delay(municipality.id)
-
-        console.print("[bold green]✓ Jobs queued![/bold green]")
+        console.print("Queuing parcel scraping...")
+        scrape_municipality_parcels.delay(municipality.id)
+        console.print("[bold green]✓ Job queued![/bold green]")
 
     finally:
         db.close()
 
 
 @app.command()
-def list_municipalities(
-    limit: int = typer.Option(50, help="Number of municipalities to show"),
-    pending_only: bool = typer.Option(False, is_flag=True, help="Show only pending municipalities"),
-):
+def list_munis(limit: int = 50):
     """List municipalities in the database."""
     setup_logging()
     db = SessionLocal()
 
     try:
-        query = db.query(Municipality)
-
-        if pending_only:
-            query = query.filter(
-                (Municipality.parcels_status == ProcessingStatus.PENDING) |
-                (Municipality.plans_status == ProcessingStatus.PENDING)
-            )
-
-        municipalities = query.limit(limit).all()
+        municipalities = db.query(Municipality).limit(limit).all()
 
         table = Table(title="Municipalities", show_header=True)
         table.add_column("Code", style="cyan")
@@ -254,17 +236,6 @@ def list_municipalities(
 
     finally:
         db.close()
-
-
-@app.command()
-def export(
-    output_file: str = typer.Argument(..., help="Output file path (GeoJSON or CSV)"),
-    municipality_code: Optional[str] = typer.Option(None, help="Filter by municipality TERYT code"),
-):
-    """Export collected data to file."""
-    setup_logging()
-    console.print(f"[bold yellow]Export functionality coming soon![/bold yellow]")
-    console.print(f"Will export to: {output_file}")
 
 
 if __name__ == "__main__":
