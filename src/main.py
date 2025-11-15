@@ -145,11 +145,14 @@ def status():
 
 @app.command()
 def start(
-    parcels: bool = typer.Option(True, "--parcels/--no-parcels", help="Scrape parcel data"),
-    plans: bool = typer.Option(True, "--plans/--no-plans", help="Scrape spatial plans"),
+    no_parcels: bool = typer.Option(False, is_flag=True, help="Skip parcel data scraping"),
+    no_plans: bool = typer.Option(False, is_flag=True, help="Skip spatial plans scraping"),
 ):
     """Start background scraping for all municipalities."""
     setup_logging()
+
+    parcels = not no_parcels
+    plans = not no_plans
 
     console.print("[bold green]Starting background scraping...[/bold green]")
     console.print(f"Scraping parcels: {parcels}")
@@ -164,12 +167,15 @@ def start(
 @app.command()
 def scrape_municipality(
     teryt_code: str = typer.Argument(..., help="TERYT code of municipality"),
-    parcels: bool = typer.Option(True, "--parcels/--no-parcels", help="Scrape parcel data"),
-    plans: bool = typer.Option(True, "--plans/--no-plans", help="Scrape spatial plans"),
+    no_parcels: bool = typer.Option(False, is_flag=True, help="Skip parcel data scraping"),
+    no_plans: bool = typer.Option(False, is_flag=True, help="Skip spatial plans scraping"),
 ):
     """Scrape a specific municipality by TERYT code."""
     setup_logging()
     db = SessionLocal()
+
+    parcels = not no_parcels
+    plans = not no_plans
 
     try:
         municipality = db.query(Municipality).filter_by(code=teryt_code).first()
