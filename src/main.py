@@ -197,7 +197,7 @@ def scrape_municipality(
 @app.command()
 def list_municipalities(
     limit: int = typer.Option(50, help="Number of municipalities to show"),
-    pending_only: bool = typer.Option(False, "--pending-only", help="Show only pending municipalities"),
+    pending_only: bool = typer.Option(False, "--pending-only/--all", help="Show only pending municipalities"),
 ):
     """List municipalities in the database."""
     setup_logging()
