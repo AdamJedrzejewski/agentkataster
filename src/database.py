@@ -2,7 +2,7 @@
 from contextlib import contextmanager
 from typing import Generator
 
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.orm import sessionmaker, Session
 from loguru import logger
 
@@ -29,7 +29,7 @@ def init_db():
 
     # Enable PostGIS extension
     with engine.connect() as conn:
-        conn.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+        conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis"))
         conn.commit()
 
     # Create all tables
