@@ -18,6 +18,22 @@ AgentKataster is an advanced tool for automatically collecting land parcel data 
 - ✅ **CLI** - wygodny interfejs linii komend do zarządzania
 - ✅ **Logowanie i monitoring** - śledzenie postępu i błędów
 
+## 🚀 Szybki start / Quick Start
+
+**Wybierz odpowiedni przewodnik:**
+
+### 1. 🖥️ Chcę uruchomić na swoim komputerze (testy, kilka gmin)
+→ Zobacz **[LOCAL_SETUP.md](LOCAL_SETUP.md)** - szczegółowy przewodnik krok po kroku
+
+### 2. ☁️ Chcę zbierać dane dla całej Polski (zalecane!)
+→ Zobacz **[DEPLOYMENT_OVH.md](DEPLOYMENT_OVH.md)** - OVH VPS (~25 PLN/miesiąc) **← Polski dostawca**
+→ Lub **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Hetzner Cloud (~4 EUR/miesiąc)
+
+### 3. 📖 Chcę zrozumieć jak to działa
+→ Zobacz **[WORKFLOW.md](WORKFLOW.md)** - szczegóły architektury i przepływu danych
+
+---
+
 ## Architektura / Architecture
 
 ```
