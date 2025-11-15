@@ -214,7 +214,7 @@ class ScraperLog(Base):
     records_failed = Column(Integer, default=0)
 
     error_message = Column(Text, nullable=True)
-    metadata = Column(Text, nullable=True)  # JSON with additional info
+    extra_metadata = Column(Text, nullable=True)  # JSON with additional info
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
