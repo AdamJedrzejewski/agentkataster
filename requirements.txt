@@ -1,0 +1,40 @@
+# Core dependencies
+asyncio==3.4.3
+aiohttp==3.9.1
+requests==2.31.0
+
+# Geospatial libraries
+geopandas==0.14.1
+shapely==2.0.2
+pyproj==3.6.1
+owslib==0.29.3
+fiona==1.9.5
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+geoalchemy2==0.14.2
+alembic==1.13.0
+
+# Background processing
+celery==5.3.4
+redis==5.0.1
+
+# Data processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Utilities
+python-dotenv==1.0.0
+pydantic==2.5.2
+pydantic-settings==2.1.0
+loguru==0.7.2
+tqdm==4.66.1
+
+# CLI
+typer==0.9.0
+rich==13.7.0
+
+# API (optional for later)
+fastapi==0.105.0
+uvicorn==0.25.0
