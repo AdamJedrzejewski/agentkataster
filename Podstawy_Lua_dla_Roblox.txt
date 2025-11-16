@@ -1,0 +1,427 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                    PODSTAWY LUA DLA ROBLOX                           ║
+║              Przewodnik dla początkujących twórców gier              ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+════════════════════════════════════════════════════════════════════════
+1. ZMIENNE - Przechowywanie danych
+════════════════════════════════════════════════════════════════════════
+
+Zmienna to "pudełko" w którym przechowujemy informacje.
+
+-- Tworzenie zmiennej:
+local imie = "Kasia"
+local wiek = 12
+local zycia = 100
+local czyGraczZyje = true
+
+WAŻNE: Zawsze używaj słowa "local" przed nazwą zmiennej!
+
+Rodzaje danych:
+- string (tekst):     local tekst = "Witaj!"
+- number (liczba):    local punkty = 50
+- boolean (prawda/fałsz): local maKlucz = true
+- nil (nic):          local pusty = nil
+
+
+════════════════════════════════════════════════════════════════════════
+2. WYŚWIETLANIE WIADOMOŚCI
+════════════════════════════════════════════════════════════════════════
+
+-- Wyświetl wiadomość w konsoli (Output):
+print("Witaj w grze!")
+print("Mam " .. wiek .. " lat")  -- ".." łączy teksty
+
+-- Wyświetl ostrzeżenie (żółty tekst):
+warn("Uwaga! Niski poziom zdrowia!")
+
+
+════════════════════════════════════════════════════════════════════════
+3. OPERACJE MATEMATYCZNE
+════════════════════════════════════════════════════════════════════════
+
+local a = 10
+local b = 3
+
+local suma = a + b        -- 13 (dodawanie)
+local roznica = a - b     -- 7 (odejmowanie)
+local iloczyn = a * b     -- 30 (mnożenie)
+local iloraz = a / b      -- 3.333... (dzielenie)
+local reszta = a % b      -- 1 (reszta z dzielenia)
+local potega = a ^ 2      -- 100 (potęgowanie)
+
+
+════════════════════════════════════════════════════════════════════════
+4. WARUNKI (IF) - Podejmowanie decyzji
+════════════════════════════════════════════════════════════════════════
+
+local zycia = 50
+
+if zycia > 80 then
+    print("Masz dużo zdrowia!")
+elseif zycia > 30 then
+    print("Uważaj, masz średnio zdrowia")
+else
+    print("NIEBEZPIECZEŃSTWO! Mało zdrowia!")
+end
+
+Operatory porównania:
+==  równe
+~=  nierówne
+>   większe
+<   mniejsze
+>=  większe lub równe
+<=  mniejsze lub równe
+
+Operatory logiczne:
+and  - i (oba muszą być prawdą)
+or   - lub (jeden musi być prawdą)
+not  - nie (odwraca)
+
+Przykład:
+if zycia > 0 and maKlucz == true then
+    print("Możesz otworzyć drzwi!")
+end
+
+
+════════════════════════════════════════════════════════════════════════
+5. PĘTLE - Powtarzanie czynności
+════════════════════════════════════════════════════════════════════════
+
+---- PĘTLA FOR (powtórz określoną liczbę razy) ----
+
+-- Policz od 1 do 5:
+for i = 1, 5 do
+    print("Liczba: " .. i)
+end
+-- Wynik: Liczba: 1, Liczba: 2, Liczba: 3, Liczba: 4, Liczba: 5
+
+-- Policz od 10 do 1 (co -1):
+for i = 10, 1, -1 do
+    print(i)
+end
+
+
+---- PĘTLA WHILE (powtarzaj dopóki warunek jest prawdą) ----
+
+local licznik = 0
+while licznik < 3 do
+    print("Licznik: " .. licznik)
+    licznik = licznik + 1
+end
+
+
+---- PĘTLA REPEAT (wykonaj przynajmniej raz) ----
+
+repeat
+    print("To się wykona przynajmniej raz")
+    licznik = licznik + 1
+until licznik > 5
+
+
+════════════════════════════════════════════════════════════════════════
+6. FUNKCJE - Wielokrotnego użytku kod
+════════════════════════════════════════════════════════════════════════
+
+-- Prosta funkcja:
+local function przywitaj()
+    print("Witaj w grze!")
+end
+
+przywitaj()  -- Wywołanie funkcji
+
+
+-- Funkcja z parametrami:
+local function przywitajGracza(imie)
+    print("Cześć, " .. imie .. "!")
+end
+
+przywitajGracza("Kasia")  -- Wynik: Cześć, Kasia!
+
+
+-- Funkcja zwracająca wartość:
+local function dodaj(a, b)
+    return a + b
+end
+
+local wynik = dodaj(5, 3)
+print(wynik)  -- Wynik: 8
+
+
+════════════════════════════════════════════════════════════════════════
+7. TABLICE (TABLES) - Przechowywanie wielu wartości
+════════════════════════════════════════════════════════════════════════
+
+---- LISTA (Array) ----
+
+local owoce = {"jabłko", "banan", "gruszka"}
+
+print(owoce[1])  -- jabłko (UWAGA: Lua liczy od 1, nie od 0!)
+print(owoce[2])  -- banan
+
+-- Dodaj element:
+table.insert(owoce, "pomarańcza")
+
+-- Usuń ostatni element:
+table.remove(owoce)
+
+-- Liczba elementów:
+print(#owoce)
+
+
+---- SŁOWNIK (Dictionary) ----
+
+local gracz = {
+    imie = "Kasia",
+    wiek = 12,
+    punkty = 100,
+    zycia = 3
+}
+
+print(gracz.imie)    -- Kasia
+print(gracz["wiek"]) -- 12
+
+gracz.punkty = gracz.punkty + 50  -- Dodaj 50 punktów
+
+
+---- ITERACJA PO TABLICY ----
+
+-- Dla listy (array):
+for i, owoc in ipairs(owoce) do
+    print(i .. ". " .. owoc)
+end
+
+-- Dla słownika (dictionary):
+for klucz, wartosc in pairs(gracz) do
+    print(klucz .. " = " .. wartosc)
+end
+
+
+════════════════════════════════════════════════════════════════════════
+8. PODSTAWY ROBLOX - Obiekty i Serwisy
+════════════════════════════════════════════════════════════════════════
+
+---- DOSTĘP DO SERWISÓW ----
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+
+---- ZNALEZIENIE GRACZA ----
+
+-- W LocalScript (skrypt po stronie klienta):
+local player = game.Players.LocalPlayer
+
+-- Znajdź postać gracza:
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Znajdź humanoid (kontroluje zdrowie, prędkość itp.):
+local humanoid = character:WaitForChild("Humanoid")
+
+
+════════════════════════════════════════════════════════════════════════
+9. MANIPULACJA OBIEKTAMI W GRZE
+════════════════════════════════════════════════════════════════════════
+
+---- ZNALEZIENIE OBIEKTU ----
+
+local part = workspace:WaitForChild("MojaPart")  -- Czeka aż część istnieje
+
+
+---- ZMIANA WŁAŚCIWOŚCI ----
+
+part.BrickColor = BrickColor.new("Bright red")  -- Zmień kolor
+part.Size = Vector3.new(10, 5, 10)              -- Zmień rozmiar
+part.Position = Vector3.new(0, 10, 0)           -- Zmień pozycję
+part.Transparency = 0.5                          -- Półprzezroczysta
+part.CanCollide = false                          -- Można przechodzić przez
+
+
+---- TWORZENIE NOWEGO OBIEKTU ----
+
+local novaPart = Instance.new("Part")
+novaPart.Parent = workspace
+novaPart.Position = Vector3.new(0, 10, 0)
+novaPart.Anchored = true  -- Nie spada
+
+
+════════════════════════════════════════════════════════════════════════
+10. ZDARZENIA (EVENTS) - Reagowanie na akcje
+════════════════════════════════════════════════════════════════════════
+
+---- GDY GRACZ DOŁĄCZY DO GRY ----
+
+game.Players.PlayerAdded:Connect(function(player)
+    print(player.Name .. " dołączył do gry!")
+end)
+
+
+---- GDY KLIKNIEMY NA CZĘŚĆ ----
+
+local button = workspace.MojPrzycisk
+
+button.ClickDetector.MouseClick:Connect(function(player)
+    print(player.Name .. " kliknął przycisk!")
+end)
+
+
+---- GDY GRACZ DOTKNIE CZĘŚCI ----
+
+local trap = workspace.Pulapka
+
+trap.Touched:Connect(function(hit)
+    local humanoid = hit.Parent:FindFirstChild("Humanoid")
+    if humanoid then
+        humanoid.Health = humanoid.Health - 10  -- Zabierz 10 HP
+        print("Au! Pułapka!")
+    end
+end)
+
+
+════════════════════════════════════════════════════════════════════════
+11. CZEKANIE I CZAS
+════════════════════════════════════════════════════════════════════════
+
+-- Czekaj 3 sekundy:
+wait(3)
+print("Minęły 3 sekundy!")
+
+-- Lepsze czekanie (nowsze):
+task.wait(3)
+
+-- Infinite loop z czekaniem:
+while true do
+    print("Powtarzaj co 5 sekund")
+    task.wait(5)
+end
+
+
+════════════════════════════════════════════════════════════════════════
+12. PRAKTYCZNY PRZYKŁAD - SYSTEM MONET
+════════════════════════════════════════════════════════════════════════
+
+-- W ServerScriptService (Server Script):
+
+local Players = game:GetService("Players")
+
+-- Gdy gracz dołącza do gry:
+Players.PlayerAdded:Connect(function(player)
+
+    -- Stwórz folder na statystyki gracza:
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+    leaderstats.Parent = player
+
+    -- Dodaj monety:
+    local coins = Instance.new("IntValue")
+    coins.Name = "Coins"
+    coins.Value = 0  -- Zaczynamy z 0 monet
+    coins.Parent = leaderstats
+
+    print(player.Name .. " rozpoczął grę z " .. coins.Value .. " monet")
+end)
+
+-- Przycisk który dodaje monety:
+local coinButton = workspace.CoinButton
+
+coinButton.ClickDetector.MouseClick:Connect(function(player)
+    local leaderstats = player:FindFirstChild("leaderstats")
+    if leaderstats then
+        local coins = leaderstats:FindFirstChild("Coins")
+        if coins then
+            coins.Value = coins.Value + 10  -- Dodaj 10 monet
+            print(player.Name .. " zebrał monety! Teraz ma: " .. coins.Value)
+        end
+    end
+end)
+
+
+════════════════════════════════════════════════════════════════════════
+13. DOBRE PRAKTYKI
+════════════════════════════════════════════════════════════════════════
+
+✓ Zawsze używaj "local" dla zmiennych
+✓ Nazywaj zmienne zrozumiale: "playerHealth" zamiast "x"
+✓ Dodawaj komentarze: -- To jest komentarz
+✓ Używaj :WaitForChild() dla obiektów które mogą nie istnieć od razu
+✓ Testuj swój kod często!
+✓ LocalScript = po stronie klienta (gracza)
+✓ Script = po stronie serwera
+✓ Używaj task.wait() zamiast wait()
+
+
+════════════════════════════════════════════════════════════════════════
+14. RODZAJE SKRYPTÓW W ROBLOX
+════════════════════════════════════════════════════════════════════════
+
+1. SCRIPT (Server Script)
+   - Znajduje się w: ServerScriptService, Workspace
+   - Wykonuje się na serwerze
+   - Kontroluje logikę gry, które wszyscy widzą
+   - Przykład: System monet, respawn enemies
+
+2. LOCALSCRIPT
+   - Znajduje się w: StarterPlayer, StarterGui, StarterPack
+   - Wykonuje się u każdego gracza oddzielnie
+   - Kontroluje rzeczy widoczne tylko dla jednego gracza
+   - Przykład: Interfejs użytkownika (GUI), efekty klienta
+
+3. MODULESCRIPT
+   - Może być używany przez inne skrypty
+   - Przechowuje funkcje wielokrotnego użytku
+   - return na końcu zwraca wartości
+
+
+════════════════════════════════════════════════════════════════════════
+15. PRZYDATNE FUNKCJE ROBLOX
+════════════════════════════════════════════════════════════════════════
+
+-- Losowa liczba:
+local losowa = math.random(1, 10)  -- Liczba od 1 do 10
+
+-- Zaokrąglanie:
+local zaokraglona = math.floor(3.7)  -- 3
+local wGore = math.ceil(3.2)         -- 4
+
+-- Sprawdź czy gracz żyje:
+if humanoid.Health > 0 then
+    print("Gracz żyje!")
+end
+
+-- Teleportuj gracza:
+character:MoveTo(Vector3.new(0, 50, 0))
+
+-- Dodaj siłę (rzuć obiekt):
+local bodyVelocity = Instance.new("BodyVelocity")
+bodyVelocity.Velocity = Vector3.new(0, 50, 0)
+bodyVelocity.Parent = part
+
+
+════════════════════════════════════════════════════════════════════════
+ZADANIA DO SAMODZIELNEGO ĆWICZENIA:
+════════════════════════════════════════════════════════════════════════
+
+1. Stwórz zmienną z twoim imieniem i wyświetl ją za pomocą print()
+
+2. Napisz funkcję która dodaje dwie liczby i zwraca wynik
+
+3. Stwórz pętlę która wyświetla liczby od 1 do 10
+
+4. Zrób tablicę z nazwami 5 ulubionych gier
+
+5. Napisz skrypt który zmienia kolor części gdy na nią klikniesz
+
+6. Stwórz system który dodaje graczowi punkt co 5 sekund
+
+7. Zrób pułapkę która zabiera 20 HP gdy gracz ją dotknie
+
+
+════════════════════════════════════════════════════════════════════════
+
+Powodzenia w tworzeniu gier na Roblox! 🎮🚀
+
+Pamiętaj: Każdy programista zaczynał od podstaw. Nie bój się eksperymentować
+i popełniać błędów - to najlepsza metoda nauki!
+
+════════════════════════════════════════════════════════════════════════
